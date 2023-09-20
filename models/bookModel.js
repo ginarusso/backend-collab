@@ -16,7 +16,7 @@ const Author = require("./authorModel")
 testConnection();
 
 const Book = connectToDB.define(
-    "Book", {
+    "book", {
         id:{
             type: DataTypes.INTEGER,
             primaryKey: true,

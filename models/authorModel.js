@@ -2,7 +2,7 @@
 const {DataTypes} = require("sequelize")
 const {connectToDB} = require("./conn")
 
-const Author = connectToDB.define("Author", {
+const Author = connectToDB.define("author", {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
