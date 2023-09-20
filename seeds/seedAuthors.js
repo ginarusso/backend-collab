@@ -14,7 +14,7 @@ const authors = [
     {
         author_name: "Alice Johnson",
         bio: "A poet and short story writer with deep insights into human nature.",
-        birthdate: new Date("1990=01-01"),
+        birthdate: new Date("1990-01-01"),
         // book_id: 3
     }
 ];

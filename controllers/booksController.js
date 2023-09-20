@@ -30,20 +30,37 @@ async function addBook(req,res){
 
 async function editBook(req,res){
     const {title, isbn, published, summary, authorId} = req.body;
-    try {
-        await Book.update(
-            { title, isbn, published, summary,authorId },
-            { where: { id: req.params.id } })
-    } catch (error) {
-        res.status(500).json({ message: error });
-      }}
+    const bookId = req.params.id
+    if (bookId === null || title === null || published === null || summary === null || authorId === null) {
+      res.status(400).json({message: "The book that you are trying to edit is missing some properties."})
+    } else {
+      Book.update({title, isbn, published, summary, authorId}, {where: {id: bookId} })
+      .then(response => {
+        if (response[0] === 0) {
+          res.status(404).json({message: "The id you have requested is not in the database."})
+        } else {
+          console.log(response)
+          res.status(200).json({message: "The book has been edited"})
+        }
+      })
+      .catch(error => {
+        res.status(500).json({message: error})
+      })
+    }}
 
-async function deleteBook(req, res) {
-    const BookID = req.params.id;
-    try{
-        await Book.destroy({ where: { id: BookID } })  
-    }catch (error) {
-        res.status(500).json({ message: error });
-}}
-
+    function deleteBook(req, res) {
+      const bookId = req.params.id;
+    
+      Book.destroy({ where: { id: bookId } })
+        .then((response) => {
+          if (response === 0) {
+            res.status(404).json({ message: "There was no book with that ID" });
+          } else {
+            res.status(200).json({ message: "The book has been deleted." });
+          }
+        })
+        .catch((error) => {
+          res.status(500).json({ message: error.message });
+        });
+    }
 module.exports = {getAllBooks, getBookByID, addBook, editBook, deleteBook}

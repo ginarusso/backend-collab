@@ -51,15 +51,35 @@ function deleteAuthor(req, res) {
     })
 }
 
+// async function editAuthor(req,res){
+//     const {author_name, bio, birthdate} = req.body;
+//     try {
+//         await Author.update(
+//             { author_name, bio, birthdate},
+//             { where: { id: req.params.id } })
+//     } catch (error) {
+//         res.status(500).json({ message: error });
+//       }}
+
 async function editAuthor(req,res){
-    const {author_name, bio, birthdate, book_id} = req.body;
-    try {
-        await Author.update(
-            { author_name, bio, birthdate, book_id },
-            { where: { id: req.params.id } })
-    } catch (error) {
-        res.status(500).json({ message: error });
-      }}
+    const {author_name, bio, birthdate} = req.body;
+    const authorId = req.params.id
+    if (authorId === null || bio === null || birthdate === null) {
+      res.status(400).json({message: "The author that you are trying to edit is missing some properties."})
+    } else {
+      Author.update({author_name, bio, birthdate}, {where: {id: authorId} })
+      .then(response => {
+        if (response[0] === 0) {
+          res.status(404).json({message: "The id you have requested is not in the database."})
+        } else {
+          console.log(response)
+          res.status(200).json({message: "The book has been edited"})
+        }
+      })
+      .catch(error => {
+        res.status(500).json({message: error})
+      })
+    }}
 
 
 
