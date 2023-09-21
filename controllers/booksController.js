@@ -29,12 +29,12 @@ async function addBook(req,res){
 }
 
 async function editBook(req,res){
-    const {title, isbn, published, summary, authorId} = req.body;
+    const {title, isbn, publishedDate, summary, authorId} = req.body;
     const bookId = req.params.id
-    if (bookId === null || title === null || published === null || summary === null || authorId === null) {
+    if (bookId === null || title === null || publishedDate === null || summary === null || authorId === null) {
       res.status(400).json({message: "The book that you are trying to edit is missing some properties."})
     } else {
-      Book.update({title, isbn, published, summary, authorId}, {where: {id: bookId} })
+      Book.update({title, isbn, publishedDate, summary, authorId}, {where: {id: bookId} })
       .then(response => {
         if (response[0] === 0) {
           res.status(404).json({message: "The id you have requested is not in the database."})

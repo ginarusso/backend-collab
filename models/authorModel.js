@@ -8,7 +8,7 @@ const Author = connectToDB.define("author", {
         primaryKey: true,
         autoIncrement: true
     },
-    author_name: {
+    name: {
         type: DataTypes.STRING(100),
         allowNull: false
     },

@@ -28,16 +28,16 @@ const Book = connectToDB.define(
         isbn:{
             type: DataTypes.STRING
         },
-        published:{
+        publishedDate:{
             type: DataTypes.INTEGER
         },
         summary:{
             type: DataTypes.STRING
+        },
+        authorId:{
+            type: DataTypes.INTEGER,
+            allowNull: false
         }
-        // authorId:{
-        //     type: DataTypes.INTEGER,
-        //     allowNull: false
-        // }
     },
     {
         timestamps: false 

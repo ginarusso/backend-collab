@@ -22,7 +22,7 @@ async function addAuthor(req, res) {
     try {
         const author = req.body;
 
-        if (author.author_name === null || author.bio === null || author.birthdate === null || author.book_id === null) {
+        if (author.name === null || author.bio === null || author.birthdate === null || author.book_id === null) {
             res.status(400).json({ message: "The author is missing some properties." });
         } else {
     
@@ -51,29 +51,19 @@ function deleteAuthor(req, res) {
     })
 }
 
-// async function editAuthor(req,res){
-//     const {author_name, bio, birthdate} = req.body;
-//     try {
-//         await Author.update(
-//             { author_name, bio, birthdate},
-//             { where: { id: req.params.id } })
-//     } catch (error) {
-//         res.status(500).json({ message: error });
-//       }}
-
 async function editAuthor(req,res){
-    const {author_name, bio, birthdate} = req.body;
+    const {name, bio, birthdate} = req.body;
     const authorId = req.params.id
-    if (authorId === null || bio === null || birthdate === null) {
+    if (authorId === null || bio === null || birthdate === null || name === null) {
       res.status(400).json({message: "The author that you are trying to edit is missing some properties."})
     } else {
-      Author.update({author_name, bio, birthdate}, {where: {id: authorId} })
+      Author.update({name, bio, birthdate}, {where: {id: authorId} })
       .then(response => {
         if (response[0] === 0) {
           res.status(404).json({message: "The id you have requested is not in the database."})
         } else {
           console.log(response)
-          res.status(200).json({message: "The book has been edited"})
+          res.status(200).json({message: "The author has been edited"})
         }
       })
       .catch(error => {
