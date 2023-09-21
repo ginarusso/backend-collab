@@ -44,4 +44,7 @@ const Book = connectToDB.define(
     }
 )
 
+Book.belongsTo(Author, { foreignKey: 'authorId', as: 'author' });
+
+
 module.exports = Book

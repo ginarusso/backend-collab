@@ -15,8 +15,6 @@ books: Associated books (One-to-Many relationship with the Books model)
 
 const {DataTypes} = require("sequelize")
 const {connectToDB} = require("./conn")
-const Book = require("./bookModel")
-
 
 const Author = connectToDB.define("author", {
     id: {
@@ -33,7 +31,7 @@ const Author = connectToDB.define("author", {
         allowNull: false
     },
     birthdate: {
-        type: DataTypes.DATE,
+        type: DataTypes.STRING,
         allowNull: false
     }
 }, 
@@ -41,6 +39,5 @@ const Author = connectToDB.define("author", {
     timestamps: false
 })
 
-Author.hasMany(Book, { foreignKey: 'authorId', as: 'books' });
 
 module.exports = Author
